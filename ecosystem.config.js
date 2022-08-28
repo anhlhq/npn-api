@@ -16,7 +16,7 @@ module.exports = {
     production: {
       user: "cloud",
       host: "sv.quanganh.uk",
-      ref: "master",
+      ref: "origin/master",
       repo: "git@github.com:anhlhq/npn-api.git",
       path: "/var/www/npn-api",
       "pre-deploy-local": "",
