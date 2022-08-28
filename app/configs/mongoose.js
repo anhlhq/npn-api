@@ -5,7 +5,7 @@ const connectMongo = () =>
     let db =
       process.env.NODE_ENV !== "production"
         ? "mongodb://127.0.0.1:27017/npn-api"
-        : "mongodb://clouddb:qaqa1234@sv.quanganh.uk:27017/npn";
+        : process.env.MONGO_URI;
     mongoose.connect(db, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
