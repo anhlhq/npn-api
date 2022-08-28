@@ -25,7 +25,6 @@ module.exports = {
       "pre-setup": "",
       env: {
         NODE_ENV: "production",
-        MONGO_URI: "",
       },
     },
   },
