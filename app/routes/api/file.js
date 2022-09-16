@@ -2,6 +2,8 @@ const multer = require("multer");
 const FileUpload = require("../../models/FileUpload");
 const { toResJson } = require("../../utils/ResponseUtils");
 const router = require("express").Router();
+const fs = require("fs");
+const { base } = require("../../models/Post");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -36,6 +38,23 @@ router.post("/", upload.single("file"), async (req, res, next) => {
   fileUpload.save();
 
   res.json(toResJson({ data: fileUpload.idFile(), message: "Upload success" }));
+});
+
+router.get("/:id", async (req, res) => {
+  const file = await FileUpload.findById(req.params.id);
+  if (!file) {
+    return res.json(
+      toResJson({ status: "FAILED", message: "File not found", code: 404 })
+    );
+  }
+  fs.readFile(file.path, { encoding: "binary" }, (err, data) => {
+    if (err) {
+      return res.json(
+        toResJson({ status: "FAILED", message: "File not found", code: 404 })
+      );
+    }
+    res.end(data, "binary");
+  });
 });
 
 module.exports = router;
