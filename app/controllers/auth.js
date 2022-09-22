@@ -3,7 +3,7 @@ const { toResJson } = require("../utils/ResponseUtils");
 exports.SignUpController = async (req, res) => {
   const { username, password, displayName } = req.body;
   if (username && username.length < 6) {
-    return res.json(
+    return res.status(400).json(
       toResJson({
         status: "FAILED",
         message: "Username must be at least 6 characters",
@@ -13,7 +13,7 @@ exports.SignUpController = async (req, res) => {
   }
 
   if (password && password.length < 6) {
-    return res.json(
+    return res.status(400).json(
       toResJson({
         status: "FAILED",
         message: "Password must be at least 6 characters",
@@ -32,14 +32,14 @@ exports.SignUpController = async (req, res) => {
 
   await user.save();
 
-  return res.json(toResJson({ data: user.toJsonWithoutToken() }));
+  return res.status(200).json(toResJson({ data: user.toJsonWithoutToken() }));
 };
 
 exports.SignInController = async (req, res) => {
   const { username, password } = req.body;
 
   if (username && username.length < 6) {
-    return res.json(
+    return res.status(400).json(
       toResJson({
         status: "FAILED",
         message: "Username must be at least 6 characters",
@@ -49,7 +49,7 @@ exports.SignInController = async (req, res) => {
   }
 
   if (password && password.length < 6) {
-    return res.json(
+    return res.status(400).json(
       toResJson({
         status: "FAILED",
         message: "Password must be at least 6 characters",
@@ -61,7 +61,7 @@ exports.SignInController = async (req, res) => {
   let user = await User.findOne({ username });
 
   if (!user) {
-    return res.json(
+    return res.status(404).json(
       toResJson({
         status: "FAILED",
         message: "User not found",
@@ -71,7 +71,7 @@ exports.SignInController = async (req, res) => {
   }
 
   if (password && !(await user.checkMatchPassword(password))) {
-    return res.json(
+    return res.status(200).json(
       toResJson({
         status: "FAILED",
         message: "Password is incorrect",
@@ -81,4 +81,11 @@ exports.SignInController = async (req, res) => {
   }
 
   return res.json(toResJson({ data: user.toJsonWithToken() }));
+};
+
+exports.checkToken = (req, res) => {
+  res.json({
+    status: "SUCCESS",
+    message: "Token is valid",
+  });
 };

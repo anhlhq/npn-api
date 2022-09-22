@@ -33,6 +33,14 @@ const modelSchema = new Schema(
 );
 
 modelSchema.methods.toJson = function () {
+  const getURLImage = this.content.match(
+    /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/gim
+  );
+  let previewImage = null;
+  if (getURLImage) {
+    previewImage = getURLImage[0];
+  }
+
   return {
     id: this._id,
     title: this.title,
@@ -41,6 +49,7 @@ modelSchema.methods.toJson = function () {
     author: this.author,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
+    previewImage,
   };
 };
 

@@ -12,21 +12,29 @@ exports.authenticate = async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
     }
     if (!token && token === null) {
-      return res.json(
-        toResJson({ status: "FAILED", message: "No token provided", code: 401 })
+      return res.status(401).json(
+        toResJson({
+          status: "FAILED",
+          message: "No token provided",
+          code: 401,
+        })
       );
     }
     const decoded = jwt.verify(token, __JWT_SECRET);
     if (!decoded) {
-      return res.json(
-        toResJson({ status: "FAILED", message: "Invalid token", code: 401 })
-      );
+      return res
+        .status(401)
+        .json(
+          toResJson({ status: "FAILED", message: "Invalid token", code: 401 })
+        );
     }
     let user = await User.findById(decoded.id);
     if (!user) {
-      return res.json(
-        toResJson({ status: "FAILED", message: "User not found", code: 404 })
-      );
+      return res
+        .status(401)
+        .json(
+          toResJson({ status: "FAILED", message: "User not found", code: 404 })
+        );
     }
     req.user = user.toJsonWithoutToken();
     user
@@ -37,8 +45,8 @@ exports.authenticate = async (req, res, next) => {
     // req.user = decoded;
     next();
   } catch (error) {
-    return res.json(
-      toResJson({ status: "FAILED", message: error.message, code: 401 })
-    );
+    return res
+      .status(401)
+      .json(toResJson({ status: "FAILED", message: error.message, code: 401 }));
   }
 };
