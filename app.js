@@ -6,6 +6,8 @@ const logger = require("morgan");
 const flash = require("connect-flash");
 const compression = require("compression");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const cookieSession = require("cookie-session");
 
 const routers = require("./app/routes");
 
@@ -31,6 +33,19 @@ app.use(function (req, res, next) {
   );
   next();
 });
+
+app.use(cookieParser("d60e308455a642c59a5b8aba848e1dc4"));
+app.use(
+  cookieSession({
+    name: "npn",
+    keys: [
+      "d60e308455a642c59a5b8aba848e1dc4",
+      "db748087f753339a8ca0a9d61609c677",
+    ],
+    // Cookie Options
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  })
+);
 
 app.use("/", routers);
 // catch 404 and forward to error handler
