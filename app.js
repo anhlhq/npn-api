@@ -22,7 +22,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(flash());
 app.use(compression());
-app.use(cors({ credentials: true, origin: "*" }));
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://npn-api.quanganh.uk/", "https://nhanphatnhanh.com/"],
+  })
+);
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*)");
   res.header(
