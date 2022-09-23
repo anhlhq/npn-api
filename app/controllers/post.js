@@ -3,7 +3,7 @@ const Post = require("../models/Post");
 
 exports.getAll = async (req, res) => {
   let type = req.query.type ?? "post";
-  let limit = req.query.limit === "infinity" ? Infinity : 4;
+  let limit = req.query.limit;
   let page = req.query.page ?? 1;
   let skip = limit * (page - 1);
 
