@@ -12,12 +12,6 @@ const routers = require("./app/routes");
 
 const app = express();
 
-var corsOptions = {
-  origin: "http://localhost:3123",
-  optionsSuccessStatus: 200, // For legacy browser support
-  methods: "GET, PUT", // add per need
-};
-
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
@@ -28,13 +22,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(flash());
 app.use(compression());
-app.use(cors(corsOptions));
+app.use(cors({ credentials: true, origin: true }));
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  res.header("Access-Control-Allow-Origin", "https://nhanphatnhanh.com/");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
   next();
 });
 
