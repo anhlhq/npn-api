@@ -25,11 +25,12 @@ app.use(compression());
 app.use(
   cors({
     credentials: true,
-    origin: ["http://npn-api.quanganh.uk/", "https://nhanphatnhanh.com/"],
+    origin: ["http://npn-api.quanganh.uk", "https://nhanphatnhanh.com"],
+    optionsSuccessStatus: 200,
   })
 );
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*)");
+  res.header("Access-Control-Allow-Origin", "http://npn-api.quanganh.uk");
   res.header(
     "Access-Control-Allow-Methods",
     "GET,PUT,POST,DELETE,PATCH,OPTIONS"
