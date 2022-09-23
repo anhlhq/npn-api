@@ -3,7 +3,7 @@ const Post = require("../models/Post");
 
 exports.getAll = async (req, res) => {
   let type = req.query.type ?? "post";
-  let limit = req.query.limit ?? 4;
+  let limit = parseInt(req.query.limit) === -1 ? Infinity : 4;
   let page = req.query.page ?? 1;
   let skip = limit * (page - 1);
 
@@ -13,8 +13,10 @@ exports.getAll = async (req, res) => {
   const posts = await Post.find({
     type,
   })
+    .sort({ createdAt: -1 })
     .limit(limit)
     .skip(skip);
+
   res.json(
     toResJson({
       data: posts.map((post) => post.toJson()),

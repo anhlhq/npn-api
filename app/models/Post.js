@@ -33,7 +33,7 @@ const modelSchema = new Schema(
 );
 
 modelSchema.methods.toJson = function () {
-  const getURLImage = this.content.match(
+  const getURLImage = (this.content ?? "").match(
     /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/gim
   );
   let previewImage = null;

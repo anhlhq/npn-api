@@ -36,6 +36,13 @@ exports.authenticate = async (req, res, next) => {
           toResJson({ status: "FAILED", message: "User not found", code: 404 })
         );
     }
+    if (decoded.role !== "admin") {
+      return res
+        .status(401)
+        .json(
+          toResJson({ status: "FAILED", message: "Unauthorized", code: 401 })
+        );
+    }
     req.user = user.toJsonWithoutToken();
     user
       .updateOne({
