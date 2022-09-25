@@ -22,26 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(flash());
 app.use(compression());
-app.use(
-  cors({
-    credentials: true,
-    origin: ["http://npn-api.quanganh.uk", "https://nhanphatnhanh.com"],
-    optionsSuccessStatus: 200,
-  })
-);
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://npn-api.quanganh.uk");
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-  );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Content-Length, X-Requested-With"
-  );
-  next();
-});
-
+app.use(cors());
 app.use(cookieParser("d60e308455a642c59a5b8aba848e1dc4"));
 app.use(
   cookieSession({
