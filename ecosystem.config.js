@@ -15,10 +15,10 @@ module.exports = {
   deploy: {
     production: {
       user: "cloud",
-      host: "sv.quanganh.uk",
+      host: "do.lehuy.co",
       ref: "origin/master",
-      repo: "git@github.com:anhlhq/npn-api.git",
-      path: "/var/www/npn-api",
+      repo: "git@quanganh:anhlhq/npn-api.git",
+      path: "/var/www/nhanphatnhanh.com/be",
       "pre-deploy-local": "",
       "post-deploy":
         "yarn install && NODE_PATH=. pm2 startOrRestart ecosystem.config.js --env production",
